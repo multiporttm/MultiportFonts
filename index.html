@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multiport Fonts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+  /* Preview the downloadable fonts if the files sit next to this page.
+     If a file is missing, the specimen falls back to Inter. */
+  @font-face { font-family: "LandUIPro"; src: local("LandUIPro"), url("MLFonts/LandUIPro.ttf") format("truetype"); font-weight: normal; font-style: normal; font-display: block; }
+  @font-face { font-family: "LandUIHr"; src: local("LandUIHr"), url("MLFonts/LandUIHr.otf") format("opentype"); font-weight: normal; font-style: normal; font-display: block; }
+
+  :root {
+    --bg: #f3f5f2;
+    --ink: #14201b;
+    --muted: #55645d;
+    --line: #cfd8d2;
+    --accent: #0f6b52;
+    --accent-ink: #ffffff;
+    --card: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1613;
+      --ink: #e8efeb;
+      --muted: #93a39a;
+      --line: #26342d;
+      --accent: #3ddc9f;
+      --accent-ink: #06130d;
+      --card: #16201b;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Inter", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  header { padding: 24px 0; border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 24px; font-weight: 500; }
+  nav a:hover { color: var(--ink); }
+
+  .hero { padding: 80px 0 48px; }
+  .hero h1 {
+    font-size: clamp(2.6rem, 8vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-weight: 800;
+    margin: 0 0 20px;
+  }
+  .hero p { max-width: 52ch; color: var(--muted); font-size: 1.15rem; margin: 0; }
+
+  .fonts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; padding: 24px 0 64px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 28px; display: flex; flex-direction: column; }
+  .card h2 { margin: 0 0 4px; font-size: 1.5rem; letter-spacing: -0.02em; }
+  .meta { color: var(--muted); font-size: 0.9rem; margin: 0 0 20px; }
+  .specimen { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 20px 0; margin-bottom: 20px; flex: 1; }
+  .specimen .big { font-size: 2.6rem; line-height: 1.1; margin: 0 0 12px; word-break: break-word; }
+  .specimen .small { margin: 0; color: var(--muted); font-size: 1rem; }
+  .pro { font-family: "LandUIPro", "Inter", sans-serif; font-weight: normal; font-synthesis: none; }
+  .hr { font-family: "LandUIHr", "Inter", sans-serif; font-weight: normal; font-synthesis: none; }
+  .status { font-size: 0.85rem; margin: 0 0 12px; color: var(--muted); }
+  .status.ok { color: var(--accent); }
+
+  .btn {
+    display: inline-block; text-align: center; text-decoration: none;
+    background: var(--accent); color: var(--accent-ink);
+    font-weight: 600; padding: 12px 20px; border-radius: 8px;
+  }
+  .btn:hover { filter: brightness(1.1); }
+
+  .tester { padding: 0 0 64px; }
+  .tester label { display: block; font-weight: 600; margin-bottom: 8px; }
+  .tester input {
+    width: 100%; padding: 14px 16px; font: inherit; font-size: 1.1rem;
+    border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--ink);
+  }
+  .tester .out { margin-top: 20px; display: grid; gap: 12px; }
+  .tester .out div { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; font-size: 1.8rem; overflow-wrap: anywhere; }
+
+  footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo">Multiport Fonts</div>
+    <nav>
+      <a href="#fonts">Fonts</a>
+      <a href="#tester">Try them</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <h1>Fonts for interfaces that ship.</h1>
+    <p>Download LandUIPro and LandUIHr, free to grab and ready to drop into your project.</p>
+  </section>
+
+  <section class="wrap fonts" id="fonts">
+    <article class="card">
+      <h2>LandUIPro</h2>
+      <p class="meta">TrueType &middot; .ttf</p>
+      <p class="status" id="statusPro">Loading preview...</p>
+      <div class="specimen">
+        <p class="big pro">Aa Bb Cc 123</p>
+        <p class="small pro">Clear, steady type for apps and dashboards.</p>
+      </div>
+      <a class="btn" href="MLFonts/LandUIPro.ttf" download>Download LandUIPro.ttf</a>
+    </article>
+
+    <article class="card">
+      <h2>LandUIHr</h2>
+      <p class="meta">OpenType &middot; .otf</p>
+      <p class="status" id="statusHr">Loading preview...</p>
+      <div class="specimen">
+        <p class="big hr">Aa Bb Cc 123</p>
+        <p class="small hr">Sharp, flexible type for headlines and branding.</p>
+      </div>
+      <a class="btn" href="MLFonts/LandUIHr.otf" download>Download LandUIHr.otf</a>
+    </article>
+  </section>
+
+  <section class="wrap tester" id="tester">
+    <label for="sample">Type your own text</label>
+    <input id="sample" type="text" value="The quick brown fox jumps over the lazy dog">
+    <div class="out">
+      <div class="pro" id="outPro"></div>
+      <div class="hr" id="outHr"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">&copy; 2026 Multiport MLTM</div>
+</footer>
+
+<script>
+  const input = document.getElementById("sample");
+  const outPro = document.getElementById("outPro");
+  const outHr = document.getElementById("outHr");
+  function update() {
+    outPro.textContent = input.value || "Type something above";
+    outHr.textContent = input.value || "Type something above";
+  }
+  input.addEventListener("input", update);
+  update();
+
+  function check(family, id, label) {
+    const el = document.getElementById(id);
+    document.fonts.load('32px "' + family + '"').then(function (faces) {
+      if (faces.length && faces[0].status === "loaded") {
+        el.textContent = "Preview shown in " + label;
+        el.classList.add("ok");
+      } else {
+        el.textContent = "Font file not found in MLFonts, showing Inter instead";
+      }
+    }).catch(function () {
+      el.textContent = "Font file not found in MLFonts, showing Inter instead";
+    });
+  }
+  check("LandUIPro", "statusPro", "LandUIPro");
+  check("LandUIHr", "statusHr", "LandUIHr");
+</script>
+</body>
+</html>
