@@ -10,8 +10,8 @@
 <style>
   /* Preview the downloadable fonts if the files sit next to this page.
      If a file is missing, the specimen falls back to Inter. */
-  @font-face { font-family: "LandUIPro"; src: local("LandUIPro"), url("MLFonts/LandUIPro.ttf") format("truetype"); font-weight: normal; font-style: normal; font-display: block; }
-  @font-face { font-family: "LandUIHr"; src: local("LandUIHr"), url("MLFonts/LandUIHr.otf") format("opentype"); font-weight: normal; font-style: normal; font-display: block; }
+  @font-face { font-family: "LandUIPro"; src: local("LandUIPro"), url("MLFonts/LandUIPro.ttf") format("truetype"); font-weight: normal; font-style: normal; font-display: swap; }
+  @font-face { font-family: "LandUIHr"; src: local("LandUIHr"), url("MLFonts/LandUIHr.otf") format("opentype"); font-weight: normal; font-style: normal; font-display: swap; }
 
   :root {
     --bg: #f3f5f2;
@@ -80,14 +80,25 @@
   }
   .btn:hover { filter: brightness(1.1); }
 
-  .tester { padding: 0 0 64px; }
-  .tester label { display: block; font-weight: 600; margin-bottom: 8px; }
-  .tester input {
-    width: 100%; padding: 14px 16px; font: inherit; font-size: 1.1rem;
-    border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--ink);
+  .compare { padding: 0 0 64px; }
+  .compare h2 { font-size: 1.6rem; letter-spacing: -0.02em; margin: 0 0 16px; }
+  .compare .panel { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 24px; }
+  .controls { display: grid; grid-template-columns: 1fr 220px; gap: 16px; }
+  @media (max-width: 640px) { .controls { grid-template-columns: 1fr; } }
+  .field label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; }
+  .field input, .field select, .card-input {
+    width: 100%; padding: 12px 14px; font: inherit; font-size: 1rem;
+    border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink);
   }
-  .tester .out { margin-top: 20px; display: grid; gap: 12px; }
-  .tester .out div { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; font-size: 1.8rem; overflow-wrap: anywhere; }
+  .compare-out { margin-top: 20px; font-size: 3rem; line-height: 1.15; overflow-wrap: anywhere; min-height: 3.6rem; }
+  .card-input { margin-bottom: 14px; }
+  .controls { grid-template-columns: 1fr 180px; }
+  .size-row { margin-top: 16px; display: flex; align-items: center; gap: 12px; font-size: 0.9rem; font-weight: 600; }
+  .size-row input { flex: 1; accent-color: var(--accent); }
+  .rows { margin-top: 20px; display: grid; gap: 16px; }
+  .row { border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; background: var(--bg); }
+  .row select { width: auto; max-width: 100%; padding: 8px 10px; font: inherit; font-size: 0.9rem; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--ink); margin-bottom: 10px; }
+  .row .compare-out { margin-top: 0; }
 
   footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: 0.9rem; }
 </style>
@@ -98,8 +109,8 @@
   <div class="wrap">
     <div class="logo">Multiport Fonts</div>
     <nav>
-      <a href="#fonts">Fonts</a>
-      <a href="#tester">Try them</a>
+      <a href="#fonts">Download</a>
+      <a href="#compare">Compare Fonts</a>
     </nav>
   </div>
 </header>
@@ -115,8 +126,9 @@
       <h2>LandUIPro</h2>
       <p class="meta">TrueType &middot; .ttf</p>
       <p class="status" id="statusPro">Loading preview...</p>
+      <input class="card-input" type="text" autocomplete="off" value="Aa Bb Cc 123" aria-label="Type text to preview LandUIPro" data-target="prevPro">
       <div class="specimen">
-        <p class="big pro">Aa Bb Cc 123</p>
+        <p class="big pro" id="prevPro">Aa Bb Cc 123</p>
         <p class="small pro">Clear, steady type for apps and dashboards.</p>
       </div>
       <a class="btn" href="MLFonts/LandUIPro.ttf" download>Download LandUIPro.ttf</a>
@@ -126,20 +138,54 @@
       <h2>LandUIHr</h2>
       <p class="meta">OpenType &middot; .otf</p>
       <p class="status" id="statusHr">Loading preview...</p>
+      <input class="card-input" type="text" autocomplete="off" value="Aa Bb Cc 123" aria-label="Type text to preview LandUIHr" data-target="prevHr">
       <div class="specimen">
-        <p class="big hr">Aa Bb Cc 123</p>
+        <p class="big hr" id="prevHr">Aa Bb Cc 123</p>
         <p class="small hr">Sharp, flexible type for headlines and branding.</p>
       </div>
       <a class="btn" href="MLFonts/LandUIHr.otf" download>Download LandUIHr.otf</a>
     </article>
   </section>
-
-  <section class="wrap tester" id="tester">
-    <label for="sample">Type your own text</label>
-    <input id="sample" type="text" value="The quick brown fox jumps over the lazy dog">
-    <div class="out">
-      <div class="pro" id="outPro"></div>
-      <div class="hr" id="outHr"></div>
+  <section class="wrap compare" id="compare">
+    <h2>Compare Fonts</h2>
+    <div class="panel">
+      <div class="field">
+        <label for="cmpText">Your text</label>
+        <input id="cmpText" type="text" autocomplete="off" value="The quick brown fox jumps over the lazy dog">
+      </div>
+      <div class="size-row">
+        <label for="cmpSize">Size</label>
+        <input id="cmpSize" type="range" min="16" max="96" value="44">
+        <span id="cmpSizeVal">44px</span>
+      </div>
+      <div class="rows">
+        <div class="row">
+          <select id="cmpFontA" aria-label="Choose font">
+            <option selected value="'LandUIPro', 'Inter', sans-serif">LandUIPro</option>
+            <option value="'LandUIHr', 'Inter', sans-serif">LandUIHr</option>
+            <option value="'Inter', sans-serif">Inter</option>
+            <option value="Arial, Helvetica, sans-serif">Arial</option>
+            <option value="Georgia, serif">Georgia</option>
+            <option value="'Times New Roman', Times, serif">Times New Roman</option>
+            <option value="'Courier New', monospace">Courier New</option>
+            <option value="system-ui, sans-serif">System UI</option>
+          </select>
+          <div class="compare-out" id="cmpOutA"></div>
+        </div>
+        <div class="row">
+          <select id="cmpFontB" aria-label="Choose font">
+            <option value="'LandUIPro', 'Inter', sans-serif">LandUIPro</option>
+            <option selected value="'LandUIHr', 'Inter', sans-serif">LandUIHr</option>
+            <option value="'Inter', sans-serif">Inter</option>
+            <option value="Arial, Helvetica, sans-serif">Arial</option>
+            <option value="Georgia, serif">Georgia</option>
+            <option value="'Times New Roman', Times, serif">Times New Roman</option>
+            <option value="'Courier New', monospace">Courier New</option>
+            <option value="system-ui, sans-serif">System UI</option>
+          </select>
+          <div class="compare-out" id="cmpOutB"></div>
+        </div>
+      </div>
     </div>
   </section>
 </main>
@@ -148,16 +194,50 @@
   <div class="wrap">&copy; 2026 Multiport MLTM</div>
 </footer>
 
-<script>
-  const input = document.getElementById("sample");
-  const outPro = document.getElementById("outPro");
-  const outHr = document.getElementById("outHr");
-  function update() {
-    outPro.textContent = input.value || "Type something above";
-    outHr.textContent = input.value || "Type something above";
+<script data-cfasync="false">
+  function bind(input, render) {
+    ["input", "keyup", "change", "paste"].forEach(function (evt) {
+      input.addEventListener(evt, function () {
+        setTimeout(function () { render(input.value); }, 0);
+      });
+    });
+    render(input.value);
   }
-  input.addEventListener("input", update);
-  update();
+
+  // Compare Fonts: one text box, two outputs, each with its own font choice
+  (function () {
+    var text = document.getElementById("cmpText");
+    var size = document.getElementById("cmpSize");
+    var sizeVal = document.getElementById("cmpSizeVal");
+    var rows = [
+      { sel: document.getElementById("cmpFontA"), out: document.getElementById("cmpOutA") },
+      { sel: document.getElementById("cmpFontB"), out: document.getElementById("cmpOutB") }
+    ];
+    function showText(v) {
+      var t = v && v.length ? v : "Type something above";
+      rows.forEach(function (r) { r.out.textContent = t; });
+    }
+    function showSize() {
+      sizeVal.textContent = size.value + "px";
+      rows.forEach(function (r) { r.out.style.fontSize = size.value + "px"; });
+    }
+    rows.forEach(function (r) {
+      function showFont() { r.out.style.fontFamily = r.sel.value; }
+      r.sel.addEventListener("change", showFont);
+      r.sel.addEventListener("input", showFont);
+      showFont();
+    });
+    size.addEventListener("input", showSize);
+    size.addEventListener("change", showSize);
+    bind(text, showText);
+    showSize();
+  })();
+
+  // Separate text box on each font card
+  Array.prototype.forEach.call(document.querySelectorAll(".card-input"), function (box) {
+    var target = document.getElementById(box.getAttribute("data-target"));
+    bind(box, function (v) { target.textContent = v && v.length ? v : "Aa Bb Cc 123"; });
+  });
 
   function check(family, id, label) {
     const el = document.getElementById(id);
@@ -172,8 +252,10 @@
       el.textContent = "Font file not found in MLFonts, showing Inter instead";
     });
   }
-  check("LandUIPro", "statusPro", "LandUIPro");
-  check("LandUIHr", "statusHr", "LandUIHr");
+  try {
+    check("LandUIPro", "statusPro", "LandUIPro");
+    check("LandUIHr", "statusHr", "LandUIHr");
+  } catch (e) {}
 </script>
 </body>
 </html>
